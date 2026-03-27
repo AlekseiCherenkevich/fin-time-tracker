@@ -10,7 +10,8 @@ export function TaskStatsPage() {
   const [period, setPeriod] = useState<TimePeriod>('week');
 
   const chartData = useMemo(() => {
-    const filteredTasks = filterByDateRange(tasks.filter(t => t.timerFinished), period);
+    // Include both completed timers and tasks added without timer
+    const filteredTasks = filterByDateRange(tasks.filter(t => t.timerFinished || !t.timerStarted), period);
     const categoryTotals: Record<string, number> = {};
     
     filteredTasks.forEach(task => {
@@ -32,12 +33,14 @@ export function TaskStatsPage() {
   }, [tasks, categories, period]);
 
   const totalTime = useMemo(() => {
-    const filteredTasks = filterByDateRange(tasks.filter(t => t.timerFinished), period);
+    // Include both completed timers and tasks added without timer
+    const filteredTasks = filterByDateRange(tasks.filter(t => t.timerFinished || !t.timerStarted), period);
     return filteredTasks.reduce((sum, t) => sum + t.duration, 0);
   }, [tasks, period]);
 
   const completedCount = useMemo(() => {
-    return filterByDateRange(tasks.filter(t => t.timerFinished), period).length;
+    // Include both completed timers and tasks added without timer
+    return filterByDateRange(tasks.filter(t => t.timerFinished || !t.timerStarted), period).length;
   }, [tasks, period]);
 
   return (
