@@ -55,9 +55,6 @@ export function TasksPage() {
     setShowCategoryModal(false);
   };
 
-  const completedTasks = tasks.filter(t => t.timerFinished);
-  const totalMinutes = completedTasks.reduce((sum, t) => sum + t.duration, 60) / 60; // Convert seconds to minutes
-
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -66,17 +63,6 @@ export function TasksPage() {
       </header>
 
       {activeTimer && <Timer />}
-
-      <div className={styles.stats}>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>{completedTasks.length}</span>
-          <span className={styles.statLabel}>Tasks Done</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>{Math.round(totalMinutes)}</span>
-          <span className={styles.statLabel}>Minutes Tracked</span>
-        </div>
-      </div>
 
       {!activeTimer && (
         <>
