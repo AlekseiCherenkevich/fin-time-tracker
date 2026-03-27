@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTasks } from '../hooks';
 import { Timer } from '../components/Timer';
-import { formatDuration, formatDate, COLORS } from '../utils/helpers';
+import { formatDuration, COLORS } from '../utils/helpers';
 import type { TaskRecord } from '../types';
 import styles from './TasksPage.module.css';
 
@@ -181,7 +181,7 @@ export function TasksPage() {
                     <div className={styles.taskDetails}>
                       <span className={styles.taskName}>{category?.name}</span>
                       <span className={styles.taskMeta}>
-                        {formatDuration(task.duration)} • {formatDate(task.date)}
+                        {formatDuration(task.duration)}
                         {task.timerFinished && <span className={styles.completed}> ✓</span>}
                       </span>
                     </div>
