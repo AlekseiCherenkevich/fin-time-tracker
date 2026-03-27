@@ -12,6 +12,7 @@ export function TasksPage() {
     activeTimer, 
     deleteTask, 
     addTask,
+    updateTask,
     startTimer,
     addCategory,
     updateCategory,
@@ -20,7 +21,9 @@ export function TasksPage() {
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [duration, setDuration] = useState('25');
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -57,6 +60,31 @@ export function TasksPage() {
 
   const handleDeleteTask = (task: TaskRecord) => {
     deleteTask(task.id);
+  };
+
+  const handleEditTask = (task: TaskRecord) => {
+    setEditingTaskId(task.id);
+    setSelectedCategory(task.categoryId);
+    setDuration(String(Math.round(task.duration / 60))); // Convert seconds to minutes
+    setShowEditTaskModal(true);
+  };
+
+  const handleUpdateTask = () => {
+    if (!editingTaskId || !selectedCategory || !duration) return;
+    
+    const task = tasks.find(t => t.id === editingTaskId);
+    if (task) {
+      updateTask({
+        ...task,
+        categoryId: selectedCategory,
+        duration: parseInt(duration) * 60 // Convert minutes to seconds
+      });
+    }
+    
+    setShowEditTaskModal(false);
+    setEditingTaskId(null);
+    setSelectedCategory('');
+    setDuration('25');
   };
 
   const handleAddCategory = () => {
@@ -158,12 +186,21 @@ export function TasksPage() {
                       </span>
                     </div>
                   </div>
-                  <button 
-                    className={styles.deleteBtn}
-                    onClick={() => handleDeleteTask(task)}
-                  >
-                    ×
-                  </button>
+                  <div className={styles.taskActions}>
+                    <button 
+                      className={styles.editBtn}
+                      onClick={() => handleEditTask(task)}
+                      title="Edit task"
+                    >
+                      ✎
+                    </button>
+                    <button 
+                      className={styles.deleteBtn}
+                      onClick={() => handleDeleteTask(task)}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               );
             })
@@ -206,6 +243,64 @@ export function TasksPage() {
               </button>
               <button onClick={handleAddTask} className={styles.confirmBtn}>
                 Add Task with Timer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showEditTaskModal && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Edit Task</h2>
+            <div className={styles.formGroup}>
+              <label>Category</label>
+              <div className={styles.categorySelect}>
+                {categories.map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`${styles.catOption} ${selectedCategory === cat.id ? styles.selected : ''}`}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    style={{ borderColor: cat.color }}
+                  >
+                    {cat.icon} {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className={styles.formGroup}>
+              <label>Duration (minutes)</label>
+              <input
+                type="number"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                min="1"
+                max="480"
+                className={styles.input}
+              />
+              <div className={styles.presets}>
+                {[15, 25, 45, 60].map(m => (
+                  <button
+                    key={m}
+                    className={`${styles.presetChip} ${duration === String(m) ? styles.active : ''}`}
+                    onClick={() => setDuration(String(m))}
+                  >
+                    {m}m
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className={styles.modalActions}>
+              <button onClick={() => {
+                setShowEditTaskModal(false);
+                setEditingTaskId(null);
+                setSelectedCategory('');
+                setDuration('25');
+              }} className={styles.cancelBtn}>
+                Cancel
+              </button>
+              <button onClick={handleUpdateTask} className={styles.confirmBtn}>
+                Save
               </button>
             </div>
           </div>

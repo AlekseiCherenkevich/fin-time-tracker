@@ -234,6 +234,25 @@
   color: #10B981;
 }
 
+.taskActions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  color: #6B7280;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.editBtn:hover {
+  color: #3B82F6;
+}
+
 .deleteBtn {
   background: none;
   border: none;
