@@ -95,6 +95,7 @@ export const getCurrencySymbol = (currency: string): string => {
     EUR: '€',
     GBP: '£',
     RUB: '₽',
+    BYN: 'Br',
     JPY: '¥',
     CNY: '¥',
     KRW: '₩',
@@ -122,7 +123,7 @@ export const DEFAULT_CATEGORIES = {
   ]
 };
 
-export const CURRENCIES = ['USD', 'EUR', 'GBP', 'RUB', 'JPY', 'CNY', 'KRW', 'INR'];
+export const CURRENCIES = ['USD', 'EUR', 'GBP', 'RUB', 'BYN', 'JPY', 'CNY', 'KRW', 'INR'];
 
 export const COLORS = [
   '#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', 
