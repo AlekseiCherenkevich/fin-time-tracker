@@ -35,6 +35,11 @@ export function ExpensesPage() {
     setNote('');
   };
 
+  const openAddModal = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setShowAddModal(true);
+  };
+
   const handleDeleteExpense = (expense: ExpenseRecord) => {
     deleteExpense(expense.id);
   };
@@ -79,12 +84,6 @@ export function ExpensesPage() {
         <p className={styles.subtitle}>Track where your money goes</p>
       </header>
 
-      <section className={styles.actions}>
-        <button onClick={() => setShowAddModal(true)} className={styles.addBtn}>
-          + Add Expense
-        </button>
-      </section>
-
       <section className={styles.categories}>
         <div className={styles.sectionHeader}>
           <h2>Categories</h2>
@@ -95,8 +94,13 @@ export function ExpensesPage() {
         <div className={styles.categoryList}>
           {categories.map(cat => (
             <div key={cat.id} className={styles.categoryItem} style={{ borderColor: cat.color }}>
-              <span className={styles.catIcon}>{cat.icon}</span>
-              <span className={styles.catName}>{cat.name}</span>
+              <button 
+                className={styles.categoryClickArea}
+                onClick={() => openAddModal(cat.id)}
+              >
+                <span className={styles.catIcon}>{cat.icon}</span>
+                <span className={styles.catName}>{cat.name}</span>
+              </button>
               <div className={styles.categoryActions}>
                 <button 
                   className={styles.editCatBtn}

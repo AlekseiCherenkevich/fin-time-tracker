@@ -19,28 +19,6 @@
   margin: 0;
 }
 
-.actions {
-  margin-bottom: 2rem;
-}
-
-.addBtn {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  color: #fff;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-}
-
-.addBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
-}
-
 .categories {
   margin-bottom: 2rem;
 }
@@ -84,6 +62,17 @@
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   border-left: 3px solid;
+}
+
+.categoryClickArea {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+  flex: 1;
 }
 
 .catIcon {
