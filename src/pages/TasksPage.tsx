@@ -99,29 +99,6 @@ export function TasksPage() {
         </>
       )}
 
-      <section className={styles.categories}>
-        <div className={styles.sectionHeader}>
-          <h2>Categories</h2>
-          <button onClick={() => setShowCategoryModal(true)} className={styles.smallBtn}>
-            + Add
-          </button>
-        </div>
-        <div className={styles.categoryList}>
-          {categories.map(cat => (
-            <div key={cat.id} className={styles.categoryItem} style={{ borderColor: cat.color }}>
-              <span className={styles.catIcon}>{cat.icon}</span>
-              <span className={styles.catName}>{cat.name}</span>
-              <button 
-                className={styles.deleteCatBtn}
-                onClick={() => deleteCategory(cat.id)}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className={styles.history}>
         <h2>Recent Tasks</h2>
         <div className={styles.taskList}>
@@ -152,6 +129,29 @@ export function TasksPage() {
               );
             })
           )}
+        </div>
+      </section>
+
+      <section className={styles.categories}>
+        <div className={styles.sectionHeader}>
+          <h2>Categories</h2>
+          <button onClick={() => setShowCategoryModal(true)} className={styles.smallBtn}>
+            + Add
+          </button>
+        </div>
+        <div className={styles.categoryList}>
+          {categories.map(cat => (
+            <div key={cat.id} className={styles.categoryItem} style={{ borderColor: cat.color }}>
+              <span className={styles.catIcon}>{cat.icon}</span>
+              <span className={styles.catName}>{cat.name}</span>
+              <button 
+                className={styles.deleteCatBtn}
+                onClick={() => deleteCategory(cat.id)}
+              >
+                ×
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 
