@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useExpenses } from '../hooks';
-import { formatDate, getCurrencySymbol, CURRENCIES, COLORS } from '../utils/helpers';
+import { getCurrencySymbol, CURRENCIES, COLORS } from '../utils/helpers';
 import type { ExpenseRecord } from '../types';
 import styles from './ExpensesPage.module.css';
 
@@ -135,10 +135,11 @@ export function ExpensesPage() {
                     <span className={styles.expenseIcon}>{category?.icon}</span>
                     <div className={styles.expenseDetails}>
                       <span className={styles.expenseName}>{category?.name}</span>
-                      <span className={styles.expenseMeta}>
-                        {formatDate(expense.date)}
-                        {expense.note && <span className={styles.note}> • {expense.note}</span>}
-                      </span>
+                      {expense.note && (
+                        <span className={styles.expenseMeta}>
+                          {expense.note}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className={styles.expenseRight}>
