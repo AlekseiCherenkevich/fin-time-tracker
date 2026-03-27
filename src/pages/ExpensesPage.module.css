@@ -19,34 +19,6 @@
   margin: 0;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.statCard {
-  background-color: #374151;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-}
-
-.statValue {
-  display: block;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #10B981;
-}
-
-.statLabel {
-  display: block;
-  font-size: 0.875rem;
-  color: #9CA3AF;
-  margin-top: 0.25rem;
-}
-
 .actions {
   margin-bottom: 2rem;
 }
@@ -395,10 +367,4 @@
   border-radius: 0.5rem;
   font-weight: 500;
   cursor: pointer;
-}
-
-@media (min-width: 768px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }

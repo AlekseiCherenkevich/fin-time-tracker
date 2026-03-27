@@ -72,27 +72,12 @@ export function ExpensesPage() {
     }
   };
 
-  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
-
   return (
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>Money Expenses</h1>
         <p className={styles.subtitle}>Track where your money goes</p>
       </header>
-
-      <div className={styles.stats}>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>
-            {getCurrencySymbol(currency)}{totalExpenses.toFixed(2)}
-          </span>
-          <span className={styles.statLabel}>Total Expenses</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>{expenses.length}</span>
-          <span className={styles.statLabel}>Transactions</span>
-        </div>
-      </div>
 
       <section className={styles.actions}>
         <button onClick={() => setShowAddModal(true)} className={styles.addBtn}>
