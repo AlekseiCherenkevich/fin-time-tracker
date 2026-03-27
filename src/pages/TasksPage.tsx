@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useTasks, useGamification } from '../hooks';
+import { useTasks } from '../hooks';
 import { Timer } from '../components/Timer';
-import { Gamification } from '../components/Gamification';
 import { formatDuration, formatDate, COLORS } from '../utils/helpers';
 import type { TaskRecord } from '../types';
 import styles from './TasksPage.module.css';
@@ -16,7 +15,6 @@ export function TasksPage() {
     addCategory,
     deleteCategory
   } = useTasks();
-  const { updatePoints } = useGamification();
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -37,18 +35,15 @@ export function TasksPage() {
     setTimeout(() => {
       setShowTimerPopup(false);
       startTimer(selectedCategory, durationNum * 60); // Convert minutes to seconds
-      updatePoints(10); // Award points for starting a task
     }, 100);
   };
 
   const handleAddQuickTask = (categoryId: string, minutes: number) => {
     startTimer(categoryId, minutes * 60);
-    updatePoints(10);
   };
 
   const handleDeleteTask = (task: TaskRecord) => {
     deleteTask(task.id);
-    updatePoints(-5); // Deduct points for deletion
   };
 
   const handleAddCategory = () => {
@@ -70,7 +65,6 @@ export function TasksPage() {
         <p className={styles.subtitle}>Track your time on different activities</p>
       </header>
 
-      <Gamification />
       {activeTimer && <Timer />}
 
       <div className={styles.stats}>
