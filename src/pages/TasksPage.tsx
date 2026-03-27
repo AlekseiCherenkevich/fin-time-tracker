@@ -101,26 +101,6 @@ export function TasksPage() {
 
       {activeTimer && <Timer />}
 
-      {!activeTimer && (
-        <>
-          <section className={styles.quickActions}>
-            <h2>Quick Start</h2>
-            <div className={styles.presetButtons}>
-              {categories.slice(0, 4).map(cat => (
-                <button 
-                  key={cat.id} 
-                  className={styles.presetBtn}
-                  onClick={() => openAddModal(cat.id)}
-                  style={{ borderColor: cat.color }}
-                >
-                  {cat.icon} {cat.name}
-                </button>
-              ))}
-            </div>
-          </section>
-        </>
-      )}
-
       <section className={styles.history}>
         <h2>Recent Tasks</h2>
         <div className={styles.taskList}>
