@@ -25,6 +25,14 @@ export function TasksPage() {
   const [newCategoryIcon, setNewCategoryIcon] = useState('📋');
   const [showTimerPopup, setShowTimerPopup] = useState(false);
 
+  const openAddModal = () => {
+    // Auto-select first category when opening modal
+    if (categories.length > 0) {
+      setSelectedCategory(categories[0].id);
+    }
+    setShowAddModal(true);
+  };
+
   const handleAddTask = () => {
     if (!selectedCategory || !duration) return;
     
@@ -79,7 +87,7 @@ export function TasksPage() {
           <section className={styles.quickActions}>
             <h2>Quick Start</h2>
             <div className={styles.quickButtons}>
-              <button onClick={() => setShowAddModal(true)} className={styles.addBtn}>
+              <button onClick={() => openAddModal()} className={styles.addBtn}>
                 + New Task
               </button>
             </div>
