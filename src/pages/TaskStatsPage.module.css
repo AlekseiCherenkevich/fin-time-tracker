@@ -1,0 +1,175 @@
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #F9FAFB;
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  color: #9CA3AF;
+  margin: 0;
+}
+
+.periodSelector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background-color: #374151;
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+}
+
+.periodBtn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.periodBtn:hover {
+  color: #F9FAFB;
+}
+
+.periodBtn.active {
+  background-color: #4F46E5;
+  color: #fff;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background-color: #374151;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4F46E5;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-top: 0.25rem;
+}
+
+.chartContainer {
+  background-color: #374151;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.legend {
+  background-color: #374151;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.legendItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #4B5563;
+}
+
+.legendItem:last-child {
+  border-bottom: none;
+}
+
+.legendLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.legendColor {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legendIcon {
+  font-size: 1.25rem;
+}
+
+.legendName {
+  font-weight: 500;
+  color: #F9FAFB;
+}
+
+.legendRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.legendValue {
+  font-weight: 600;
+  color: #F9FAFB;
+}
+
+.legendPercent {
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  min-width: 40px;
+  text-align: right;
+}
+
+.empty {
+  background-color: #374151;
+  border-radius: 1rem;
+  padding: 3rem;
+  text-align: center;
+}
+
+.empty p {
+  color: #9CA3AF;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.emptyHint {
+  margin-top: 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: #6B7280 !important;
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .periodSelector {
+    flex-wrap: wrap;
+  }
+  
+  .periodBtn {
+    flex: 1 1 45%;
+  }
+}
