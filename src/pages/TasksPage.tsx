@@ -11,6 +11,7 @@ export function TasksPage() {
     categories, 
     activeTimer, 
     deleteTask, 
+    addTask,
     startTimer,
     addCategory,
     deleteCategory
@@ -36,6 +37,15 @@ export function TasksPage() {
       setShowTimerPopup(false);
       startTimer(selectedCategory, durationNum * 60); // Convert minutes to seconds
     }, 100);
+  };
+
+  const handleAddTaskWithoutTimer = () => {
+    if (!selectedCategory || !duration) return;
+    
+    const durationNum = parseInt(duration);
+    setShowAddModal(false);
+    // Add task directly without timer
+    addTask(selectedCategory, durationNum * 60);
   };
 
   const handleAddQuickTask = (categoryId: string, minutes: number) => {
@@ -189,6 +199,9 @@ export function TasksPage() {
             <div className={styles.modalActions}>
               <button onClick={() => setShowAddModal(false)} className={styles.cancelBtn}>
                 Cancel
+              </button>
+              <button onClick={handleAddTaskWithoutTimer} className={styles.addDirectBtn}>
+                Add Without Timer
               </button>
               <button onClick={handleAddTask} className={styles.confirmBtn}>
                 Start with Timer
