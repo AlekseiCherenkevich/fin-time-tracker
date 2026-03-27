@@ -101,39 +101,6 @@ export function TasksPage() {
 
       {activeTimer && <Timer />}
 
-      <section className={styles.history}>
-        <h2>Recent Tasks</h2>
-        <div className={styles.taskList}>
-          {tasks.length === 0 ? (
-            <p className={styles.empty}>No tasks yet. Start your first task!</p>
-          ) : (
-            tasks.slice().reverse().map(task => {
-              const category = categories.find(c => c.id === task.categoryId);
-              return (
-                <div key={task.id} className={styles.taskItem} style={{ borderColor: category?.color }}>
-                  <div className={styles.taskInfo}>
-                    <span className={styles.taskIcon}>{category?.icon}</span>
-                    <div className={styles.taskDetails}>
-                      <span className={styles.taskName}>{category?.name}</span>
-                      <span className={styles.taskMeta}>
-                        {formatDuration(task.duration)} • {formatDate(task.date)}
-                        {task.timerFinished && <span className={styles.completed}> ✓</span>}
-                      </span>
-                    </div>
-                  </div>
-                  <button 
-                    className={styles.deleteBtn}
-                    onClick={() => handleDeleteTask(task)}
-                  >
-                    ×
-                  </button>
-                </div>
-              );
-            })
-          )}
-        </div>
-      </section>
-
       <section className={styles.categories}>
         <div className={styles.sectionHeader}>
           <h2>Categories</h2>
@@ -168,6 +135,39 @@ export function TasksPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.history}>
+        <h2>Recent Tasks</h2>
+        <div className={styles.taskList}>
+          {tasks.length === 0 ? (
+            <p className={styles.empty}>No tasks yet. Start your first task!</p>
+          ) : (
+            tasks.slice().reverse().map(task => {
+              const category = categories.find(c => c.id === task.categoryId);
+              return (
+                <div key={task.id} className={styles.taskItem} style={{ borderColor: category?.color }}>
+                  <div className={styles.taskInfo}>
+                    <span className={styles.taskIcon}>{category?.icon}</span>
+                    <div className={styles.taskDetails}>
+                      <span className={styles.taskName}>{category?.name}</span>
+                      <span className={styles.taskMeta}>
+                        {formatDuration(task.duration)} • {formatDate(task.date)}
+                        {task.timerFinished && <span className={styles.completed}> ✓</span>}
+                      </span>
+                    </div>
+                  </div>
+                  <button 
+                    className={styles.deleteBtn}
+                    onClick={() => handleDeleteTask(task)}
+                  >
+                    ×
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </section>
 
