@@ -9,6 +9,7 @@ export function ExpensesPage() {
     expenses, 
     categories, 
     addExpense, 
+    updateExpense,
     deleteExpense,
     addCategory,
     updateCategory,
@@ -17,6 +18,8 @@ export function ExpensesPage() {
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showEditExpenseModal, setShowEditExpenseModal] = useState(false);
+  const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null);
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [amount, setAmount] = useState('');
@@ -42,6 +45,37 @@ export function ExpensesPage() {
 
   const handleDeleteExpense = (expense: ExpenseRecord) => {
     deleteExpense(expense.id);
+  };
+
+  const handleEditExpense = (expense: ExpenseRecord) => {
+    setEditingExpenseId(expense.id);
+    setSelectedCategory(expense.categoryId);
+    setAmount(String(expense.amount));
+    setCurrency(expense.currency);
+    setNote(expense.note || '');
+    setShowEditExpenseModal(true);
+  };
+
+  const handleUpdateExpense = () => {
+    if (!editingExpenseId || !selectedCategory || !amount) return;
+    
+    const expense = expenses.find(e => e.id === editingExpenseId);
+    if (expense) {
+      updateExpense({
+        ...expense,
+        categoryId: selectedCategory,
+        amount: parseFloat(amount),
+        currency,
+        note: note || undefined
+      });
+    }
+    
+    setShowEditExpenseModal(false);
+    setEditingExpenseId(null);
+    setSelectedCategory('');
+    setAmount('');
+    setCurrency('USD');
+    setNote('');
   };
 
   const handleAddCategory = () => {
@@ -146,12 +180,21 @@ export function ExpensesPage() {
                     <span className={styles.expenseAmount}>
                       {getCurrencySymbol(expense.currency)}{expense.amount.toFixed(2)}
                     </span>
-                    <button 
-                      className={styles.deleteBtn}
-                      onClick={() => handleDeleteExpense(expense)}
-                    >
-                      ×
-                    </button>
+                    <div className={styles.expenseActions}>
+                      <button 
+                        className={styles.editBtn}
+                        onClick={() => handleEditExpense(expense)}
+                        title="Edit expense"
+                      >
+                        ✎
+                      </button>
+                      <button 
+                        className={styles.deleteBtn}
+                        onClick={() => handleDeleteExpense(expense)}
+                      >
+                        ×
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -203,6 +246,77 @@ export function ExpensesPage() {
               </button>
               <button onClick={handleAddExpense} className={styles.confirmBtn}>
                 Add
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showEditExpenseModal && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Edit Expense</h2>
+            <div className={styles.formGroup}>
+              <label>Category</label>
+              <div className={styles.categorySelect}>
+                {categories.map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`${styles.catOption} ${selectedCategory === cat.id ? styles.selected : ''}`}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    style={{ borderColor: cat.color }}
+                  >
+                    {cat.icon} {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className={styles.formGroup}>
+              <label>Amount</label>
+              <div className={styles.amountRow}>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  min="0.01"
+                  step="0.01"
+                  className={styles.input}
+                  placeholder="0.00"
+                />
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className={styles.currencySelect}
+                >
+                  {CURRENCIES.map(c => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className={styles.formGroup}>
+              <label>Note (optional)</label>
+              <input
+                type="text"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                className={styles.input}
+                placeholder="Add a note..."
+              />
+            </div>
+            <div className={styles.modalActions}>
+              <button onClick={() => {
+                setShowEditExpenseModal(false);
+                setEditingExpenseId(null);
+                setSelectedCategory('');
+                setAmount('');
+                setCurrency('USD');
+                setNote('');
+              }} className={styles.cancelBtn}>
+                Cancel
+              </button>
+              <button onClick={handleUpdateExpense} className={styles.confirmBtn}>
+                Save
               </button>
             </div>
           </div>
