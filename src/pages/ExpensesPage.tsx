@@ -164,21 +164,6 @@ export function ExpensesPage() {
           <div className={styles.modalContent}>
             <h2>Add Expense</h2>
             <div className={styles.formGroup}>
-              <label>Category</label>
-              <div className={styles.categorySelect}>
-                {categories.map(cat => (
-                  <button
-                    key={cat.id}
-                    className={`${styles.catOption} ${selectedCategory === cat.id ? styles.selected : ''}`}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    style={{ borderColor: cat.color }}
-                  >
-                    {cat.icon} {cat.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className={styles.formGroup}>
               <label>Amount</label>
               <div className={styles.amountRow}>
                 <input

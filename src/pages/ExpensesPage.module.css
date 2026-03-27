@@ -287,31 +287,6 @@
   border-color: #10B981;
 }
 
-.categorySelect {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.catOption {
-  background-color: #374151;
-  color: #F9FAFB;
-  border: 2px solid transparent;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.catOption.selected {
-  background-color: #10B981;
-}
-
-.catOption:hover {
-  background-color: #4B5563;
-}
-
 .iconPicker {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
