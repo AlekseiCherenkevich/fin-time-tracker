@@ -121,6 +121,26 @@
 .catName {
   font-size: 0.875rem;
   color: #F9FAFB;
+  flex: 1;
+}
+
+.categoryActions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.editCatBtn {
+  background: none;
+  border: none;
+  color: #6B7280;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.editCatBtn:hover {
+  color: #3B82F6;
 }
 
 .deleteCatBtn {

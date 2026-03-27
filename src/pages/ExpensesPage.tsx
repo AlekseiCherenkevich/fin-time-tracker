@@ -11,11 +11,13 @@ export function ExpensesPage() {
     addExpense, 
     deleteExpense,
     addCategory,
+    updateCategory,
     deleteCategory
   } = useExpenses();
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [amount, setAmount] = useState('');
   const [currency, setCurrency] = useState('USD');
@@ -39,11 +41,35 @@ export function ExpensesPage() {
 
   const handleAddCategory = () => {
     if (!newCategoryName) return;
-    const color = COLORS[categories.length % COLORS.length];
-    addCategory(newCategoryName, color, newCategoryIcon);
+    
+    if (editingCategoryId) {
+      const existingCategory = categories.find(c => c.id === editingCategoryId);
+      if (existingCategory) {
+        updateCategory({
+          ...existingCategory,
+          name: newCategoryName,
+          icon: newCategoryIcon
+        });
+      }
+    } else {
+      const color = COLORS[categories.length % COLORS.length];
+      addCategory(newCategoryName, color, newCategoryIcon);
+    }
+    
     setNewCategoryName('');
     setNewCategoryIcon('💳');
+    setEditingCategoryId(null);
     setShowCategoryModal(false);
+  };
+
+  const handleEditCategory = (categoryId: string) => {
+    const category = categories.find(c => c.id === categoryId);
+    if (category) {
+      setEditingCategoryId(categoryId);
+      setNewCategoryName(category.name);
+      setNewCategoryIcon(category.icon);
+      setShowCategoryModal(true);
+    }
   };
 
   const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
@@ -86,12 +112,21 @@ export function ExpensesPage() {
             <div key={cat.id} className={styles.categoryItem} style={{ borderColor: cat.color }}>
               <span className={styles.catIcon}>{cat.icon}</span>
               <span className={styles.catName}>{cat.name}</span>
-              <button 
-                className={styles.deleteCatBtn}
-                onClick={() => deleteCategory(cat.id)}
-              >
-                ×
-              </button>
+              <div className={styles.categoryActions}>
+                <button 
+                  className={styles.editCatBtn}
+                  onClick={() => handleEditCategory(cat.id)}
+                  title="Edit category"
+                >
+                  ✎
+                </button>
+                <button 
+                  className={styles.deleteCatBtn}
+                  onClick={() => deleteCategory(cat.id)}
+                >
+                  ×
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -202,7 +237,7 @@ export function ExpensesPage() {
       {showCategoryModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h2>Add Category</h2>
+            <h2>{editingCategoryId ? 'Edit Category' : 'Add Category'}</h2>
             <div className={styles.formGroup}>
               <label>Name</label>
               <input
@@ -228,11 +263,16 @@ export function ExpensesPage() {
               </div>
             </div>
             <div className={styles.modalActions}>
-              <button onClick={() => setShowCategoryModal(false)} className={styles.cancelBtn}>
+              <button onClick={() => {
+                setShowCategoryModal(false);
+                setEditingCategoryId(null);
+                setNewCategoryName('');
+                setNewCategoryIcon('💳');
+              }} className={styles.cancelBtn}>
                 Cancel
               </button>
               <button onClick={handleAddCategory} className={styles.confirmBtn}>
-                Add
+                {editingCategoryId ? 'Save' : 'Add'}
               </button>
             </div>
           </div>
