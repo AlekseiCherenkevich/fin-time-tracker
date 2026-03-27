@@ -25,11 +25,8 @@ export function TasksPage() {
   const [newCategoryIcon, setNewCategoryIcon] = useState('📋');
   const [showTimerPopup, setShowTimerPopup] = useState(false);
 
-  const openAddModal = () => {
-    // Auto-select first category when opening modal
-    if (categories.length > 0) {
-      setSelectedCategory(categories[0].id);
-    }
+  const openAddModal = (categoryId: string) => {
+    setSelectedCategory(categoryId);
     setShowAddModal(true);
   };
 
@@ -54,10 +51,6 @@ export function TasksPage() {
     setShowAddModal(false);
     // Add task directly without timer
     addTask(selectedCategory, durationNum * 60);
-  };
-
-  const handleAddQuickTask = (categoryId: string, minutes: number) => {
-    startTimer(categoryId, minutes * 60);
   };
 
   const handleDeleteTask = (task: TaskRecord) => {
@@ -86,17 +79,12 @@ export function TasksPage() {
         <>
           <section className={styles.quickActions}>
             <h2>Quick Start</h2>
-            <div className={styles.quickButtons}>
-              <button onClick={() => openAddModal()} className={styles.addBtn}>
-                + New Task
-              </button>
-            </div>
             <div className={styles.presetButtons}>
               {categories.slice(0, 4).map(cat => (
                 <button 
                   key={cat.id} 
                   className={styles.presetBtn}
-                  onClick={() => handleAddQuickTask(cat.id, 25)}
+                  onClick={() => openAddModal(cat.id)}
                   style={{ borderColor: cat.color }}
                 >
                   {cat.icon} {cat.name}
@@ -150,8 +138,13 @@ export function TasksPage() {
         <div className={styles.categoryList}>
           {categories.map(cat => (
             <div key={cat.id} className={styles.categoryItem} style={{ borderColor: cat.color }}>
-              <span className={styles.catIcon}>{cat.icon}</span>
-              <span className={styles.catName}>{cat.name}</span>
+              <button 
+                className={styles.categoryClickArea}
+                onClick={() => openAddModal(cat.id)}
+              >
+                <span className={styles.catIcon}>{cat.icon}</span>
+                <span className={styles.catName}>{cat.name}</span>
+              </button>
               <button 
                 className={styles.deleteCatBtn}
                 onClick={() => deleteCategory(cat.id)}
@@ -166,22 +159,7 @@ export function TasksPage() {
       {showAddModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h2>New Task</h2>
-            <div className={styles.formGroup}>
-              <label>Category</label>
-              <div className={styles.categorySelect}>
-                {categories.map(cat => (
-                  <button
-                    key={cat.id}
-                    className={`${styles.catOption} ${selectedCategory === cat.id ? styles.selected : ''}`}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    style={{ borderColor: cat.color }}
-                  >
-                    {cat.icon} {cat.name}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <h2>Add Task</h2>
             <div className={styles.formGroup}>
               <label>Duration (minutes)</label>
               <input
@@ -209,10 +187,10 @@ export function TasksPage() {
                 Cancel
               </button>
               <button onClick={handleAddTaskWithoutTimer} className={styles.addDirectBtn}>
-                Add Without Timer
+                Add Task
               </button>
               <button onClick={handleAddTask} className={styles.confirmBtn}>
-                Start with Timer
+                Add Task with Timer
               </button>
             </div>
           </div>

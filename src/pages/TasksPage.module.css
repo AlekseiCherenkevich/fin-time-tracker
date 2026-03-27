@@ -146,6 +146,21 @@
   border-left: 3px solid;
 }
 
+.categoryClickArea {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}
+
+.categoryClickArea:hover {
+  opacity: 0.8;
+}
+
 .catIcon {
   font-size: 1rem;
 }
