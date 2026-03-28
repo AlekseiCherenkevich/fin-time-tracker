@@ -126,6 +126,11 @@ export const DEFAULT_CATEGORIES = {
 export const CURRENCIES = ['USD', 'EUR', 'GBP', 'RUB', 'BYN', 'JPY', 'CNY', 'KRW', 'INR'];
 
 export const COLORS = [
-  '#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', 
+  '#ef4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', 
   '#EC4899', '#6366F1', '#14B8A6', '#F97316', '#84CC16'
 ];
+
+// Get ID from object that may have either 'id' or '_id' (MongoDB uses _id)
+export function getId(obj: { id?: string; _id?: string }): string {
+  return obj._id || obj.id || '';
+}

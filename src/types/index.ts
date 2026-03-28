@@ -58,3 +58,27 @@ export interface ChartData {
   color: string;
   percentage: number;
 }
+
+// API Response types (MongoDB format)
+export interface CategoryResponse {
+  _id: string;
+  name: string;
+  color: string;
+  icon: string;
+}
+
+export interface ExpenseResponse {
+  _id: string;
+  categoryId: string;
+  amount: number;
+  currency: string;
+  date: string;
+  note?: string;
+}
+
+export interface TaskResponse {
+  _id: string;
+  categoryId: string;
+  title: string;
+  completed: boolean;
+}
